@@ -18,14 +18,14 @@ import MpesaLogo from "@/assets/logo-mpesa.png";
 import AirtelMoneyLogo from "@/assets/logo-airtel-money.jpg";
 import OrangeMoneyLogo from "@/assets/logo-orange-money.jpg";
 import request from "@/request";
-import { Invoice } from "@/type";
+// import { Invoice } from "@/type";
 
 function Payment() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
   const [phoneNumber, setPhoneNumber] = React.useState<string>("");
-  const [invoice, setInvoice] = React.useState<Invoice | null>(null);
+  // const [invoice, setInvoice] = React.useState<Invoice | null>(null);
   const [operator, setOperator] = React.useState<
     "vodacom" | "orange" | "airtel"
   >("vodacom");
@@ -37,14 +37,14 @@ function Payment() {
   //   fetchInvoice();
   // }, [state?.invoiceId]);
 
-  const fetchInvoice = async () => {
-    try {
-      const { data } = await request.get("facture/" + state?.invoiceId);
-      setInvoice(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchInvoice = async () => {
+  //   try {
+  //     const { data } = await request.get("facture/" + state?.invoiceId);
+  //     setInvoice(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   async function makePayment() {
     if (!phoneNumber.trim()) return;
@@ -54,18 +54,6 @@ function Payment() {
 
     try {
       const res = await request.post("api/gateway", {
-        // MerchantId: "52e7f181-86ef-4cdc-9b42-c1062dfad3d2",
-        // MerchantPass: "0000",
-        // PhoneNumber: phoneNumber,
-        // Hash: "0000",
-        // Currency: currency,
-        // ServiceOperator: operator,
-        // TransactionReference: "",
-        // OperationType: "debit",
-        // CallbackUrl: "",
-        // MerchandReference: "",
-        // Amount: state?.amount,
-
         "Amount": state?.amount,
         "CallbackUrl": "any",
         "Currency": currency.toUpperCase(),
