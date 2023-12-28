@@ -13,10 +13,10 @@ function Home() {
   const onFindMeter = async () => {
     setNotFound(false);
     try {
-      const { data } = await request.get("compteur/" + number);
-      if (!data) {
-        return setNotFound(true);
-      }
+      // const { data } = await request.get("compteur/" + number);
+      // if (!data) {
+      //   return setNotFound(true);
+      // }
       navigate(`/details/${number}`);
     } catch (error) {
       console.log(error);

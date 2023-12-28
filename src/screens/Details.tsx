@@ -12,33 +12,21 @@ import { Input } from "@/components/ui/input";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "@/assets/icons";
-import request from "@/request";
-import { Invoice } from "@/type";
+
+const min = 10000;
+const max = 100000;
+
 
 function Details() {
   const navigate = useNavigate();
   const params = useParams();
   const [number, setNumber] = React.useState<string>("");
-  const [invoices, setInvoices] = React.useState<Array<Invoice>>([]);
 
   React.useEffect(() => {
     if (params?.id) {
       setNumber(params.id);
     }
   }, [params?.id]);
-
-  React.useEffect(() => {
-    fetchInvoices();
-  }, []);
-
-  const fetchInvoices = async () => {
-    try {
-      const { data } = await request.get("facture");
-      setInvoices(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <div className="min-h-screen relative pt-20">
@@ -56,7 +44,7 @@ function Details() {
               maxLength={20}
               minLength={10}
             />
-            <Button disabled={number.trim().length < 10} onClick={() => {}}>
+            <Button disabled={number.trim().length < 10} onClick={() => { }}>
               Rechercher
             </Button>
           </div>
@@ -64,7 +52,7 @@ function Details() {
           <div className="py-5">
             <div>
               Abonné(e) trouvé(e):{" "}
-              <span className="font-bold">Sadala Kayumba Nathan</span>
+              <span className="font-bold">Nathan Sadala</span>
             </div>
             <div>
               Numéro du compteur:{" "}
@@ -89,31 +77,32 @@ function Details() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {invoices?.map((invoice, i) => (
-                <TableRow key={i}>
-                  <TableCell className="font-medium pl-0">
-                    {invoice.dateEmission}
-                  </TableCell>
-                  <TableCell>{invoice.indiceFacture} m&sup3;</TableCell>
-                  <TableCell>{"0"} CDF</TableCell>
-                  <TableCell>
-                    <div className="flex items-center justify-between">
-                      <span>{invoice.montant.toLocaleString()} CDF</span>
-                      <Button
-                        variant={"secondary"}
-                        className="w-8 h-8 p-0"
-                        onClick={() =>
-                          navigate("/payment", {
-                            state: { invoiceId: invoice?.id },
-                          })
-                        }
-                      >
-                        <ArrowRightIcon className="w-7 h-7" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {Array.from({ length: 3 }, (_, i) => String(i)).map((i) => {
+                const amount = Math.floor(Math.random() * (max - min - 1)) + min
+                return (
+                  <TableRow key={i}>
+                    <TableCell className="font-medium pl-0">Mars 2023</TableCell>
+                    <TableCell>23 m&sup3;</TableCell>
+                    <TableCell>-</TableCell>
+                    <TableCell>
+                      <div className="flex items-center justify-between">
+                        <span>{amount?.toLocaleString()} CDF</span>
+                        <Button
+                          variant={"secondary"}
+                          className="w-8 h-8 p-0"
+                          onClick={() =>
+                            navigate("/payment", {
+                              state: { meterNumber: params?.id, invoiceId: params?.id, amount: amount },
+                            })
+                          }
+                        >
+                          <ArrowRightIcon className="w-7 h-7" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
             </TableBody>
           </Table>
         </div>

@@ -23,6 +23,7 @@ import { Invoice } from "@/type";
 function Payment() {
   const navigate = useNavigate();
   const { state } = useLocation();
+
   const [phoneNumber, setPhoneNumber] = React.useState<string>("");
   const [invoice, setInvoice] = React.useState<Invoice | null>(null);
   const [operator, setOperator] = React.useState<
@@ -32,9 +33,9 @@ function Payment() {
   const [hasError, setHasError] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  React.useEffect(() => {
-    fetchInvoice();
-  }, [state?.invoiceId]);
+  // React.useEffect(() => {
+  //   fetchInvoice();
+  // }, [state?.invoiceId]);
 
   const fetchInvoice = async () => {
     try {
@@ -52,11 +53,31 @@ function Payment() {
     setIsLoading(true);
 
     try {
-      const res = await request.post("pay", {
-        operator,
-        montant: invoice?.montant,
-        currency,
-        phone_number: phoneNumber,
+      const res = await request.post("api/gateway", {
+        // MerchantId: "52e7f181-86ef-4cdc-9b42-c1062dfad3d2",
+        // MerchantPass: "0000",
+        // PhoneNumber: phoneNumber,
+        // Hash: "0000",
+        // Currency: currency,
+        // ServiceOperator: operator,
+        // TransactionReference: "",
+        // OperationType: "debit",
+        // CallbackUrl: "",
+        // MerchandReference: "",
+        // Amount: state?.amount,
+
+        "Amount": state?.amount,
+        "CallbackUrl": "any",
+        "Currency": currency.toUpperCase(),
+        "Hash": "0000",
+        "MerchantReference": "any",
+        "MerchantId": "52e7f181-86ef-4cdc-9b42-c1062dfad3d2",
+        "MerchantPass": "0000",
+        "OperationType": "debit",
+        "PhoneNumber": phoneNumber,
+        "ServiceOperator": operator,
+        "TransactionReference": "any",
+        "Transaction": ""
       });
       console.log(res);
     } catch (error) {
@@ -105,7 +126,7 @@ function Payment() {
                   <TableHead>Montant à payer</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
+              {/* <TableBody>
                 {invoice && (
                   <TableRow>
                     <TableCell>{invoice?.dateEmission}</TableCell>
@@ -116,6 +137,17 @@ function Payment() {
                     </TableCell>
                   </TableRow>
                 )}
+              </TableBody> */}
+
+              <TableBody>
+                <TableRow>
+                  <TableCell className="font-medium pl-0">Mars 2023</TableCell>
+                  <TableCell>23 m&sup3;</TableCell>
+                  <TableCell>-</TableCell>
+                  <TableCell>
+                    {state?.amount?.toLocaleString()} CDF
+                  </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
             <Button variant={"ghost"} className="p-2">
@@ -219,7 +251,7 @@ function Payment() {
               >
                 {isLoading
                   ? "Paiement en cours..."
-                  : `Payez ${invoice?.montant?.toLocaleString()} CDF`}
+                  : `Payez ${state?.amount?.toLocaleString()} CDF`}
               </Button>
               {hasError && (
                 <p className="text-center mt-3 text-sm">
