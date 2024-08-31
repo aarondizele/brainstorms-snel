@@ -53,17 +53,17 @@ function Payment() {
     setIsLoading(true);
 
     try {
-      const res = await request.post("api/gateway", {
-        "Amount": state?.amount,
-        "CallbackUrl": "any",
-        "Currency": currency.toUpperCase(),
-        "Hash": "0000",
-        "MerchantReference": "any",
-        "MerchantId": "52e7f181-86ef-4cdc-9b42-c1062dfad3d2",
-        "MerchantPass": "brainstorm2024",
-        "OperationType": "debit",
-        "PhoneNumber": phoneNumber,
-        "ServiceOperator": operator
+      const res = await request.post("https://akibapay.brainstormtechs.com/api/gateway/", {
+        "amount": state?.amount,
+        "callbackUrl": "any",
+        "currency": currency.toUpperCase(),
+        "hash": "0000",
+        "merchantReference": "any",
+        "merchantId": "52e7f181-86ef-4cdc-9b42-c1062dfad3d2",
+        "merchantPass": "brainstorm2024",
+        "operationType": "debit",
+        "phoneNumber": phoneNumber,
+        "serviceOperator": operator
       });
       console.log(res);
     } catch (error) {
