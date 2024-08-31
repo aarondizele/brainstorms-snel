@@ -66,19 +66,6 @@ function Payment() {
         "phoneNumber": phoneNumber,
         "serviceOperator": operator
       });
-
-      console.log({
-        "amount": state?.amount,
-        "callbackUrl": "any",
-        "currency": currency.toUpperCase(),
-        "hash": "0000",
-        "merchantReference": `${uuidv4()}`,
-        "merchantId": "52e7f181-86ef-4cdc-9b42-c1062dfad3d2",
-        "merchantPass": "brainstorm2024",
-        "operationType": "debit",
-        "phoneNumber": phoneNumber,
-        "serviceOperator": operator
-      })
       
       console.log(res);
     } catch (error) {
