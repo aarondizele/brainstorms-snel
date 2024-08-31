@@ -224,7 +224,7 @@ function Payment() {
                 type="tel"
                 value={phoneNumber}
                 onChange={({ target }) => setPhoneNumber(target.value)}
-                placeholder="+243"
+                placeholder="0811111111"
                 className="col-span-2 max-w-sm"
               />
             </div>
