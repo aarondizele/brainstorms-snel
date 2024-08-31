@@ -60,12 +60,10 @@ function Payment() {
         "Hash": "0000",
         "MerchantReference": "any",
         "MerchantId": "52e7f181-86ef-4cdc-9b42-c1062dfad3d2",
-        "MerchantPass": "0000",
+        "MerchantPass": "brainstorm2024",
         "OperationType": "debit",
         "PhoneNumber": phoneNumber,
-        "ServiceOperator": operator,
-        "TransactionReference": "any",
-        "Transaction": ""
+        "ServiceOperator": operator
       });
       console.log(res);
     } catch (error) {
