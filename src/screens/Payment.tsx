@@ -18,6 +18,7 @@ import MpesaLogo from "@/assets/logo-mpesa.png";
 import AirtelMoneyLogo from "@/assets/logo-airtel-money.jpg";
 import OrangeMoneyLogo from "@/assets/logo-orange-money.jpg";
 import request from "@/request";
+import { v4 as uuidv4 } from 'uuid';
 // import { Invoice } from "@/type";
 
 function Payment() {
@@ -58,7 +59,7 @@ function Payment() {
         "callbackUrl": "any",
         "currency": currency.toUpperCase(),
         "hash": "0000",
-        "merchantReference": "any",
+        "merchantReference": `${uuidv4()}`,
         "merchantId": "52e7f181-86ef-4cdc-9b42-c1062dfad3d2",
         "merchantPass": "brainstorm2024",
         "operationType": "debit",
